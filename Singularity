@@ -8,9 +8,9 @@ From: ubuntu:latest
 
 %setup
 
-    cp /home/vagrant/candig-deploy/keycloak/keycloakStart.sh ${SINGULARITY_ROOTFS}
-    cp /home/vagrant/candig-deploy/keycloak/keycloakConfig.json ${SINGULARITY_ROOTFS}
-    cp /home/vagrant/candig-deploy/keycloak/keycloakPassword.sh ${SINGULARITY_ROOTFS}
+    cp keycloak/keycloakStart.sh ${SINGULARITY_ROOTFS}
+    cp keycloak/keycloakConfig.json ${SINGULARITY_ROOTFS}
+    cp keycloak/keycloakPassword.sh ${SINGULARITY_ROOTFS}
 
 %post
 
