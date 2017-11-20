@@ -33,15 +33,17 @@ From: ubuntu:latest
     chmod +x /srv/keycloakStart.sh
     chmod +x /srv/keycloakPassword.sh
 
-    chmod o+w /srv/keycloak-3.3.0.CR2/standalone
-    chmod o+w /srv/keycloak-3.3.0.CR2/standalone/tmp
-    chmod o+w /srv/keycloak-3.3.0.CR2/standalone/configuration
-    chmod o+rw /srv/keycloak-3.3.0.CR2/standalone/configuration/*
+    chmod o+rw -R /srv/keycloak-3.3.0.CR2/standalone
+    chmod o+rw -R /srv/keycloak-3.3.0.CR2/bin
+    chmod o+rw -R /srv/keycloak-3.3.0.CR2/modules
+    chmod o+rw -R /srv/keycloak-3.3.0.CR2/welcome-content
+    chmod o+rw -R /srv/keycloak-3.3.0.CR2/themes
+    chmod o+rwx /srv/keycloak-3.3.0.CR2/jboss-modules.jar
 
 %runscript
 
     # Start keycloak when the container is run
     # the keycloakStart.sh script determines the local IP on which
     # the keycloak server should listen
-    exec /srv/keycloakStart.sh False CanDIG admin admin user user
-    
+    #exec /srv/keycloakStart.sh False CanDIG admin admin user user
+    exec /srv/keycloak-3.3.0.CR2/bin/standalone.sh
