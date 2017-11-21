@@ -11,6 +11,7 @@ From: ubuntu:latest
     cp keycloak/keycloakStart.sh ${SINGULARITY_ROOTFS}
     cp keycloak/keycloakConfig.json ${SINGULARITY_ROOTFS}
     cp keycloak/keycloakPassword.sh ${SINGULARITY_ROOTFS}
+    cp -r keycloak/standalone ${SINGULARITY_ROOTFS}
 
 %post
 
@@ -23,22 +24,27 @@ From: ubuntu:latest
     cd /srv
 
     # Download and unzip Keycloak
-    wget https://downloads.jboss.org/keycloak/3.3.0.CR2/keycloak-3.3.0.CR2.zip
-    unzip keycloak-3.3.0.CR2.zip
+    wget https://downloads.jboss.org/keycloak/3.4.0.Final/keycloak-3.4.0.Final.zip
+    unzip keycloak-3.4.0.Final.zip
+    rm keycloak-3.4.0.Final.zip
 
     mv /keycloakStart.sh /srv/keycloakStart.sh
     mv /keycloakConfig.json /srv/keycloakConfig.json
     mv /keycloakPassword.sh /srv/keycloakPassword.sh
 
-    chmod +x /srv/keycloakStart.sh
-    chmod +x /srv/keycloakPassword.sh
+    rm -r /srv/keycloak-3.4.0.Final/standalone/log
+    rm -r /srv/keycloak-3.4.0.Final/standalone/tmp
+    rm -r /srv/keycloak-3.4.0.Final/standalone/data
+    rm -r /srv/keycloak-3.4.0.Final/standalone/configuration
 
-    chmod o+rw -R /srv/keycloak-3.3.0.CR2/standalone
-    chmod o+rw -R /srv/keycloak-3.3.0.CR2/bin
-    chmod o+rw -R /srv/keycloak-3.3.0.CR2/modules
-    chmod o+rw -R /srv/keycloak-3.3.0.CR2/welcome-content
-    chmod o+rw -R /srv/keycloak-3.3.0.CR2/themes
-    chmod o+rwx /srv/keycloak-3.3.0.CR2/jboss-modules.jar
+    mv /standalone/log /srv/keycloak-3.4.0.Final/standalone/log
+    mv /standalone/tmp /srv/keycloak-3.4.0.Final/standalone/tmp
+    mv /standalone/data /srv/keycloak-3.4.0.Final/standalone/data
+    mv /standalone/configuration /srv/keycloak-3.4.0.Final/standalone/configuration
+
+    rmdir /standalone
+
+    chmod a+rwx -R /srv
 
 %runscript
 
@@ -46,4 +52,4 @@ From: ubuntu:latest
     # the keycloakStart.sh script determines the local IP on which
     # the keycloak server should listen
     #exec /srv/keycloakStart.sh False CanDIG admin admin user user
-    exec /srv/keycloak-3.3.0.CR2/bin/standalone.sh -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.file=/srv/keycloakConfig.json -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
+    exec /srv/keycloak-3.4.0.Final/bin/standalone.sh -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.file=/srv/keycloakConfig.json -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
