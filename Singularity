@@ -12,7 +12,6 @@ From: ubuntu:latest
     cp keycloak/keycloakStart.sh ${SINGULARITY_ROOTFS}
     cp keycloak/keycloakConfig.json ${SINGULARITY_ROOTFS}
     cp keycloak/keycloakPassword.sh ${SINGULARITY_ROOTFS}
-    #cp -r standalone ${SINGULARITY_ROOTFS}
 
 %post
 
@@ -33,16 +32,6 @@ From: ubuntu:latest
     mv /keycloakStart.sh /srv/keycloakStart.sh
     mv /keycloakConfig.json /srv/keycloakConfig.json
     mv /keycloakPassword.sh /srv/keycloakPassword.sh
-
-    #rm -r /srv/keycloak-3.4.0.Final/standalone/tmp
-    #rm -r /srv/keycloak-3.4.0.Final/standalone/configuration
-
-    #mv /standalone/log /srv/keycloak-3.4.0.Final/standalone/log
-    #mv /standalone/tmp /srv/keycloak-3.4.0.Final/standalone/tmp
-    #mv /standalone/data /srv/keycloak-3.4.0.Final/standalone/data
-    #mv /standalone/configuration /srv/keycloak-3.4.0.Final/standalone/configuration
-
-    rmdir /standalone
 
     chmod a+rwx -R /srv
     umask 0
