@@ -11,7 +11,7 @@ From: ubuntu:latest
     cp keycloak/keycloakStart.sh ${SINGULARITY_ROOTFS}
     cp keycloak/keycloakConfig.json ${SINGULARITY_ROOTFS}
     cp keycloak/keycloakPassword.sh ${SINGULARITY_ROOTFS}
-    cp -r keycloak/standalone ${SINGULARITY_ROOTFS}
+    cp -r standalone ${SINGULARITY_ROOTFS}
 
 %post
 
