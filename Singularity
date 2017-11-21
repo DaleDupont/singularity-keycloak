@@ -43,6 +43,7 @@ From: ubuntu:latest
     rmdir /standalone
 
     chmod a+rwx -R /srv
+    umask 0
 
 %runscript
 
