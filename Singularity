@@ -32,9 +32,7 @@ From: ubuntu:latest
     mv /keycloakConfig.json /srv/keycloakConfig.json
     mv /keycloakPassword.sh /srv/keycloakPassword.sh
 
-    rm -r /srv/keycloak-3.4.0.Final/standalone/log
     rm -r /srv/keycloak-3.4.0.Final/standalone/tmp
-    rm -r /srv/keycloak-3.4.0.Final/standalone/data
     rm -r /srv/keycloak-3.4.0.Final/standalone/configuration
 
     mv /standalone/log /srv/keycloak-3.4.0.Final/standalone/log
