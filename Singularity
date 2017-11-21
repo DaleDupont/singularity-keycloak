@@ -46,4 +46,4 @@ From: ubuntu:latest
     # the keycloakStart.sh script determines the local IP on which
     # the keycloak server should listen
     #exec /srv/keycloakStart.sh False CanDIG admin admin user user
-    exec /srv/keycloak-3.3.0.CR2/bin/standalone.sh
+    exec /srv/keycloak-3.3.0.CR2/bin/standalone.sh -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.file=/srv/keycloakConfig.json -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
