@@ -8,10 +8,11 @@ From: ubuntu:latest
 
 %setup
 
+    cp keycloak/keycloakAlt.sh ${SINGULARITY_ROOTFS}
     cp keycloak/keycloakStart.sh ${SINGULARITY_ROOTFS}
     cp keycloak/keycloakConfig.json ${SINGULARITY_ROOTFS}
     cp keycloak/keycloakPassword.sh ${SINGULARITY_ROOTFS}
-    cp -r standalone ${SINGULARITY_ROOTFS}
+    #cp -r standalone ${SINGULARITY_ROOTFS}
 
 %post
 
@@ -28,17 +29,18 @@ From: ubuntu:latest
     unzip keycloak-3.4.0.Final.zip
     rm keycloak-3.4.0.Final.zip
 
+    mv /keycloakAlt.sh /srv/keycloakAlt.sh
     mv /keycloakStart.sh /srv/keycloakStart.sh
     mv /keycloakConfig.json /srv/keycloakConfig.json
     mv /keycloakPassword.sh /srv/keycloakPassword.sh
 
-    rm -r /srv/keycloak-3.4.0.Final/standalone/tmp
-    rm -r /srv/keycloak-3.4.0.Final/standalone/configuration
+    #rm -r /srv/keycloak-3.4.0.Final/standalone/tmp
+    #rm -r /srv/keycloak-3.4.0.Final/standalone/configuration
 
-    mv /standalone/log /srv/keycloak-3.4.0.Final/standalone/log
-    mv /standalone/tmp /srv/keycloak-3.4.0.Final/standalone/tmp
-    mv /standalone/data /srv/keycloak-3.4.0.Final/standalone/data
-    mv /standalone/configuration /srv/keycloak-3.4.0.Final/standalone/configuration
+    #mv /standalone/log /srv/keycloak-3.4.0.Final/standalone/log
+    #mv /standalone/tmp /srv/keycloak-3.4.0.Final/standalone/tmp
+    #mv /standalone/data /srv/keycloak-3.4.0.Final/standalone/data
+    #mv /standalone/configuration /srv/keycloak-3.4.0.Final/standalone/configuration
 
     rmdir /standalone
 
@@ -51,4 +53,5 @@ From: ubuntu:latest
     # the keycloakStart.sh script determines the local IP on which
     # the keycloak server should listen
     #exec /srv/keycloakStart.sh False CanDIG admin admin user user
-    exec /srv/keycloak-3.4.0.Final/bin/standalone.sh -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.file=/srv/keycloakConfig.json -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
+    #exec /srv/keycloak-3.4.0.Final/bin/standalone.sh -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.file=/srv/keycloakConfig.json -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
+    exec /srv/keycloakAlt.sh
