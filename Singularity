@@ -9,9 +9,7 @@ From: ubuntu:latest
 %setup
 
     cp keycloak/keycloakAlt.sh ${SINGULARITY_ROOTFS}
-    cp keycloak/keycloakStart.sh ${SINGULARITY_ROOTFS}
-    cp keycloak/keycloakConfig.json ${SINGULARITY_ROOTFS}
-    cp keycloak/keycloakPassword.sh ${SINGULARITY_ROOTFS}
+    cp keycloak/keyPwdSing.sh ${SINGULARITY_ROOTFS}
 
 %post
 
@@ -29,12 +27,18 @@ From: ubuntu:latest
     rm keycloak-3.4.0.Final.zip
 
     mv /keycloakAlt.sh /srv/keycloakAlt.sh
-    mv /keycloakStart.sh /srv/keycloakStart.sh
-    mv /keycloakConfig.json /srv/keycloakConfig.json
-    mv /keycloakPassword.sh /srv/keycloakPassword.sh
+    mv /keyPwdSing.sh /srv/keyPwdSing.sh
+
+    # make the anchor
+    # this file determines how much extra "free" space
+    # will be made available on the container
+    # the file is deleted at runtime to free the space
+    # this free space is necessary for keycloak's database
+    dd if=/dev/zero of=/srv/out.dat bs=1M count=512
 
     chmod a+rwx -R /srv
     umask 0
+
 
 %runscript
 
@@ -42,5 +46,4 @@ From: ubuntu:latest
     # the keycloakStart.sh script determines the local IP on which
     # the keycloak server should listen
     #exec /srv/keycloakStart.sh False CanDIG admin admin user user
-    #exec /srv/keycloak-3.4.0.Final/bin/standalone.sh -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.file=/srv/keycloakConfig.json -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
     exec /srv/keycloakAlt.sh
